@@ -2,12 +2,6 @@ package game
 
 import tl "github.com/JoelOtter/termloop"
 
-//Game Object Variables.
-var sg *tl.Game
-var sp *Sidepanel
-var gs *Gamescreen
-var ts *Titlescreen
-
 // Own created types.
 type direction int
 type difficulty int
@@ -15,6 +9,11 @@ type difficulty int
 // Game options
 var Difficulty = "Normal"
 var ColorObject = "Snake"
+
+type Coordinates struct {
+	X int
+	Y int
+}
 
 const (
 	easy difficulty = iota
@@ -29,7 +28,7 @@ const (
 	right
 )
 
-type Titlescreen struct {
+type LandingScreen struct {
 	tl.Level
 	Logo           *tl.Entity
 	GameDifficulty difficulty
@@ -44,42 +43,30 @@ type Gameoverscreen struct {
 	OptionsText       []*tl.Text
 }
 
-type Gameoptionsscreen struct {
-	tl.Level
-	StartText *tl.Text
-
-	CurrentColorObjectText *tl.Text
-	ObjectBackground       *tl.Rectangle
-	ColorObjectOptions     []*tl.Text
-
-	CurrentDifficultyText *tl.Text
-	DifficultyBackground  *tl.Rectangle
-	DifficultyOptions     []*tl.Text
-
-	ColorPanelBackground *tl.Rectangle
-	ColorPanelOptions    []string
-	ColorSelectedIcon    *tl.Text
-}
-
 type Gamescreen struct {
 	tl.Level
 	FPS             float64
 	Score           int
 	SnakeEntity     *Snake
-	FoodEntity      *Food
-	ArenaEntity     *Arena
-	SidepanelObject *Sidepanel
+	FoodEntity      *Target
+	ArenaEntity     *Border
+	SidepanelObject *Panel
 }
 
-type Sidepanel struct {
+type Panel struct {
 	Background     *tl.Rectangle
 	Instructions   []string
 	ScoreText      *tl.Text
 	SpeedText      *tl.Text
 	DifficultyText *tl.Text
+	Width          *tl.Text
+	Height         *tl.Text
+	Direction      *tl.Text
+	HeadX          *tl.Text
+	HeadY          *tl.Text
 }
 
-type Arena struct {
+type Border struct {
 	*tl.Entity
 	Width       int
 	Height      int
@@ -94,13 +81,16 @@ type Snake struct {
 	Speed      int
 }
 
-type Food struct {
+type Target struct {
 	*tl.Entity
 	Foodposition Coordinates
 	Emoji        rune
 }
 
-type Coordinates struct {
-	X int
-	Y int
-}
+//Game Object Variables.
+var sg *tl.Game
+var sp *Panel
+var gs *Gamescreen
+var ts *LandingScreen
+var gameWidth int
+var gameHeight int

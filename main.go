@@ -1,7 +1,17 @@
 package main
 
-import "github.com/specter25/snake-cli/game"
+import (
+	"fmt"
+
+	"github.com/specter25/snake-cli/game"
+)
 
 func main() {
-	game.StartGame()
+	var width int
+	var height int
+	fmt.Println("Enter arena width , recommended width 70")
+	fmt.Scanf("%d", &width)
+	fmt.Println("Enter arena height , recommended height 25")
+	fmt.Scanf("%d", &height)
+	game.StartGame(width, height)
 }

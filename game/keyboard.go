@@ -31,6 +31,7 @@ func (snake *Snake) Tick(event tl.Event) {
 			}
 		}
 	}
+	UpdateText()
 }
 
 func (gos *Gameoverscreen) Tick(event tl.Event) {
@@ -45,7 +46,7 @@ func (gos *Gameoverscreen) Tick(event tl.Event) {
 }
 
 // Tick will listen for a keypress to initiate the game.
-func (ts *Titlescreen) Tick(event tl.Event) {
+func (ts *LandingScreen) Tick(event tl.Event) {
 	if event.Type == tl.EventKey {
 		if event.Key == tl.KeyEnter {
 			gs = NewGamescreen()

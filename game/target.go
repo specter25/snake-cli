@@ -9,19 +9,19 @@ import (
 
 // Variable insideborderW and insideborderH are variables consisting of the arenawidth and height and subtract both with 1
 // in order to account for the arena border.
-var insideborderW = 70 - 1
-var insideborderH = 25 - 1
+var insideborderW = 70 - 5
+var insideborderH = 25 - 5
 
-func NewFood() *Food {
-	food := new(Food)
-	food.Entity = tl.NewEntity(1, 1, 1, 1)
+func NewFood() *Target {
+	food := new(Target)
+	food.Entity = tl.NewEntity(1, 1, 2, 2)
 	food.MoveFood()
 
 	return food
 }
 
 // MoveFood moves the food into a new random position.
-func (food *Food) MoveFood() {
+func (food *Target) MoveFood() {
 
 	NewX := RandomInsideArena(insideborderW, 1)
 	NewY := RandomInsideArena(insideborderH, 1)
@@ -64,14 +64,14 @@ func RandomFood() rune {
 }
 
 // Draw will print out the food on the screen.
-func (food *Food) Draw(screen *tl.Screen) {
+func (food *Target) Draw(screen *tl.Screen) {
 	screen.RenderCell(food.Foodposition.X, food.Foodposition.Y, &tl.Cell{
 		Ch: food.Emoji,
 	})
 }
 
 // Contains checks if food contains the coordinates, if so this will return a bool.
-func (food *Food) Contains(c Coordinates) bool {
+func (food *Target) Contains(c Coordinates) bool {
 	return c.X == food.Foodposition.X && c.Y == food.Foodposition.Y
 }
 

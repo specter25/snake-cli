@@ -8,8 +8,11 @@ import (
 )
 
 // StartGame will start the game with the tilescreen.
-func StartGame() {
+func StartGame(w int, h int) {
 	sg = tl.NewGame()
+
+	gameWidth = w
+	gameHeight = h
 
 	ts := NewTitleScreen()
 
@@ -25,8 +28,8 @@ func StartGame() {
 }
 
 // NewTitleScreen will create a new titlescreen and return it.
-func NewTitleScreen() *Titlescreen {
-	ts = new(Titlescreen)
+func NewTitleScreen() *LandingScreen {
+	ts = new(LandingScreen)
 	ts.Level = tl.NewBaseLevel(tl.Cell{
 		Bg: tl.ColorBlack,
 	})
@@ -36,7 +39,7 @@ func NewTitleScreen() *Titlescreen {
 
 	ts.GameDifficulty = normal
 	ts.OptionsText = []*tl.Text{
-		tl.NewText(10, 15, "Press ENTER to start!", tl.ColorWhite, tl.ColorBlack),
+		tl.NewText(30, 15, "Press ENTER to start!", tl.ColorBlue, tl.ColorWhite),
 	}
 
 	return ts
@@ -51,7 +54,7 @@ func NewGamescreen() *Gamescreen {
 	SetDiffiultyFPS()
 	gs.Score = 0
 	gs.SnakeEntity = NewSnake()
-	gs.ArenaEntity = NewArena(70, 25)
+	gs.ArenaEntity = NewArena(gameWidth, gameHeight)
 	gs.FoodEntity = NewFood()
 	gs.SidepanelObject = NewSidepanel()
 
@@ -61,16 +64,13 @@ func NewGamescreen() *Gamescreen {
 	gs.AddEntity(gs.SidepanelObject.ScoreText)
 	gs.AddEntity(gs.SidepanelObject.SpeedText)
 	gs.AddEntity(gs.SidepanelObject.DifficultyText)
+	gs.AddEntity(gs.SidepanelObject.Width)
+	gs.AddEntity(gs.SidepanelObject.Height)
+	gs.AddEntity(gs.SidepanelObject.HeadX)
+	gs.AddEntity(gs.SidepanelObject.Direction)
+	gs.AddEntity(gs.SidepanelObject.HeadY)
 	gs.AddEntity(gs.SnakeEntity)
 	gs.AddEntity(gs.ArenaEntity)
-
-	y := 7
-	for _, v := range sp.Instructions {
-		var i *tl.Text
-		y += 2
-		i = tl.NewText(70+2, y, v, tl.ColorBlack, tl.ColorWhite)
-		gs.AddEntity(i)
-	}
 
 	sg.Screen().SetFps(gs.FPS)
 
@@ -78,21 +78,22 @@ func NewGamescreen() *Gamescreen {
 }
 
 // NewSidepanel will create a new sidepanel given the arena height and width.
-func NewSidepanel() *Sidepanel {
-	sp = new(Sidepanel)
-	sp.Instructions = []string{
-		"Instructions:",
-		"Use ← → ↑ ↓ to move the snake around",
-		"Pick up the food to grow bigger",
-		"■: 1 point/growth",
-		"R: 5 points (removes some speed!)",
-		"S: 1 point (increased speed!!)",
-	}
+func NewSidepanel() *Panel {
+	sp = new(Panel)
 
-	sp.Background = tl.NewRectangle(70+1, 0, 45, 25, tl.ColorWhite)
-	sp.ScoreText = tl.NewText(70+2, 1, fmt.Sprintf("Score: %d", gs.Score), tl.ColorBlack, tl.ColorWhite)
-	sp.SpeedText = tl.NewText(70+2, 3, fmt.Sprintf("Speed: %.0f", gs.FPS), tl.ColorBlack, tl.ColorWhite)
-	sp.DifficultyText = tl.NewText(70+2, 5, fmt.Sprintf("Difficulty: %s", Difficulty), tl.ColorBlack, tl.ColorWhite)
+	head := gs.SnakeEntity.Head()
+
+	sp.Background = tl.NewRectangle(gameWidth+1, 0, 45, gameHeight, tl.ColorWhite)
+	sp.ScoreText = tl.NewText(gameWidth+2, 1, fmt.Sprintf("Score: %d", gs.Score), tl.ColorBlack, tl.ColorWhite)
+	sp.SpeedText = tl.NewText(gameWidth+2, 3, fmt.Sprintf("Speed: %.0f", gs.FPS), tl.ColorBlack, tl.ColorWhite)
+	sp.DifficultyText = tl.NewText(gameWidth+2, 5, fmt.Sprintf("Difficulty: %s", Difficulty), tl.ColorBlack, tl.ColorWhite)
+	sp.Width = tl.NewText(gameWidth+2, 6, fmt.Sprintf("Arena Width: %d", gameWidth), tl.ColorBlack, tl.ColorWhite)
+	sp.Height = tl.NewText(gameWidth+2, 7, fmt.Sprintf("Arena Height: %d", gameHeight), tl.ColorBlack, tl.ColorWhite)
+	sp.Height = tl.NewText(gameWidth+2, 8, fmt.Sprintf("Arena Height: %d", gameHeight), tl.ColorBlack, tl.ColorWhite)
+	sp.Direction = tl.NewText(gameWidth+2, 9, fmt.Sprintf("Snake Direction: %s", GetDirection(gs.SnakeEntity.Direction)), tl.ColorBlack, tl.ColorWhite)
+	sp.HeadX = tl.NewText(gameWidth+2, 10, fmt.Sprintf("X Coordiate(Snake's Head): %d", head.X), tl.ColorBlack, tl.ColorWhite)
+	sp.HeadY = tl.NewText(gameWidth+2, 11, fmt.Sprintf("y Coordiate(Snake's Head) %d", head.Y), tl.ColorBlack, tl.ColorWhite)
+
 	return sp
 }
 
@@ -133,6 +134,12 @@ func UpdateScore(amount int) {
 	sp.ScoreText.SetText(fmt.Sprintf("Score: %d", gs.Score))
 }
 
+func UpdateText() {
+	sp.Direction.SetText(fmt.Sprintf("Snake Direction: %s", GetDirection(gs.SnakeEntity.Direction)))
+	sp.HeadX.SetText(fmt.Sprintf("X Coordiate(Snake's Head): %d", gs.SnakeEntity.Head().X))
+	sp.HeadY.SetText(fmt.Sprintf("Y Coordiate(Snake's Head): %d", gs.SnakeEntity.Head().Y))
+}
+
 // UpdateFPS updates the fps text.
 func UpdateFPS() {
 	sg.Screen().SetFps(gs.FPS)
@@ -168,4 +175,14 @@ func SetDiffiultyFPS() {
 	case hard:
 		gs.FPS = 25
 	}
+}
+
+func GetDirection(dir direction) string {
+	directionText := map[int]string{
+		0: "up",
+		1: "down",
+		2: "left",
+		3: "right",
+	}
+	return directionText[int(dir)]
 }

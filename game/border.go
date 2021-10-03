@@ -4,8 +4,8 @@ import tl "github.com/JoelOtter/termloop"
 
 // NewArena will create a new arena with the arena with and arena height given when this function was called in game.go
 // This function will create a arena using the arena struct that can be found in the types.go file.
-func NewArena(w, h int) *Arena {
-	arena := new(Arena)
+func NewArena(w, h int) *Border {
+	arena := new(Border)
 	arena.Width = w - 1
 	arena.Height = h - 1
 	arena.Entity = tl.NewEntity(1, 1, 1, 1)
@@ -23,12 +23,12 @@ func NewArena(w, h int) *Arena {
 	return arena
 }
 
-func (arena *Arena) Contains(c Coordinates) bool {
+func (arena *Border) Contains(c Coordinates) bool {
 	_, exists := arena.ArenaBorder[c]
 	return exists
 }
 
-func (arena *Arena) Draw(screen *tl.Screen) {
+func (arena *Border) Draw(screen *tl.Screen) {
 	for i := range arena.ArenaBorder {
 		screen.RenderCell(i.X, i.Y, &tl.Cell{
 			Bg: CheckSelectedColor(counterArena),
