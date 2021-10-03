@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/specter25/snake-cli/game"
+	"github.com/specter25/snake-cli/src/game"
 )
 
 func main() {
