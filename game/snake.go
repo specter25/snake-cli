@@ -22,13 +22,13 @@ func (snake *Snake) Head() *Coordinates {
 	return &snake.Bodylength[len(snake.Bodylength)-1]
 }
 
-// BorderCollision checks if the arena border contains the snakes head, if so it will return true.
-func (snake *Snake) BorderCollision() bool {
+// CollideBorder checks if the arena border contains the snakes head, if so it will return true.
+func (snake *Snake) CollideBorder() bool {
 	return gs.ArenaEntity.Contains(*snake.Head())
 }
 
-// FoodCollision checks if the food contains the snakes head, if so it will return true.
-func (snake *Snake) FoodCollision() bool {
+// CollideFood checks if the food contains the snakes head, if so it will return true.
+func (snake *Snake) CollideFood() bool {
 	return gs.FoodEntity.Contains(*snake.Head())
 }
 
@@ -40,20 +40,20 @@ func (snake *Snake) SnakeCollision() bool {
 // Draw will check every tick and draw the snake on the screen, it also checks if the snake has any collisions
 // using the funtions above.
 func (snake *Snake) Draw(screen *tl.Screen) {
-	nHead := *snake.Head()
+	newHead := *snake.Head()
 	switch snake.Direction {
 	case up:
-		nHead.Y--
+		newHead.Y--
 	case down:
-		nHead.Y++
+		newHead.Y++
 	case left:
-		nHead.X--
+		newHead.X--
 	case right:
-		nHead.X++
+		newHead.X++
 	}
 
 	// Checks for a food collision using the collision function.
-	if snake.FoodCollision() {
+	if snake.CollideFood() {
 		switch gs.FoodEntity.Emoji {
 		case 'R':
 			switch ts.GameDifficulty {
@@ -82,7 +82,7 @@ func (snake *Snake) Draw(screen *tl.Screen) {
 					UpdateFPS()
 				}
 			}
-			snake.Bodylength = append(snake.Bodylength, nHead)
+			snake.Bodylength = append(snake.Bodylength, newHead)
 		case 'S':
 			switch ts.GameDifficulty {
 			case easy:
@@ -95,16 +95,16 @@ func (snake *Snake) Draw(screen *tl.Screen) {
 			UpdateFPS()
 		default:
 			UpdateScore(1)
-			snake.Bodylength = append(snake.Bodylength, nHead)
+			snake.Bodylength = append(snake.Bodylength, newHead)
 		}
 		gs.FoodEntity.MoveFood()
 	} else {
-		snake.Bodylength = append(snake.Bodylength[1:], nHead)
+		snake.Bodylength = append(snake.Bodylength[1:], newHead)
 	}
 
-	snake.SetPosition(nHead.X, nHead.Y)
+	snake.SetPosition(newHead.X, newHead.Y)
 
-	if snake.BorderCollision() || snake.SnakeCollision() {
+	if snake.CollideBorder() || snake.SnakeCollision() {
 		Gameover()
 	}
 

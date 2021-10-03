@@ -49,7 +49,7 @@ func (gos *Gameoverscreen) Tick(event tl.Event) {
 func (ts *LandingScreen) Tick(event tl.Event) {
 	if event.Type == tl.EventKey {
 		if event.Key == tl.KeyEnter {
-			gs = NewGamescreen()
+			gs = GameScreenNew()
 			sg.Screen().SetLevel(gs)
 		}
 	}

@@ -31,10 +31,9 @@ func (food *Target) MoveFood() {
 
 // RandomFood will use the ASCII-charset to pick a random rune from the slice and print it out as food.
 func RandomFood() rune {
-	// This slice contains all of the possible food icons.
 	emoji := []rune{
 		'R', // Favourite dish, extra points!!!
-		'🍒',
+		'👿',
 		'🍍',
 		'🍑',
 		'🍇',
@@ -54,7 +53,6 @@ func RandomFood() rune {
 
 	rand.Seed(time.Now().UnixNano())
 
-	// Return a random rune picked from the slice
 	return emoji[rand.Intn(len(emoji))]
 }
 
@@ -67,7 +65,7 @@ func (food *Target) Draw(screen *tl.Screen) {
 
 // Contains checks if food contains the coordinates, if so this will return a bool.
 func (food *Target) Contains(c Coordinates) bool {
-	return c.X == food.Foodposition.X && c.Y == food.Foodposition.Y
+	return (c.X == food.Foodposition.X || c.X == (food.Foodposition.X+1)) && c.Y == food.Foodposition.Y
 }
 
 // RandomInsideArena will the minimal, which is just inside the border and the maximal, being the arena width or height.

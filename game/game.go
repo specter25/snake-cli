@@ -7,14 +7,14 @@ import (
 	tl "github.com/JoelOtter/termloop"
 )
 
-// StartGame will start the game with the tilescreen.
-func StartGame(w int, h int) {
+// NewGame will start the game with the tilescreen.
+func NewGame(w int, h int) {
 	sg = tl.NewGame()
 
 	gameWidth = w
 	gameHeight = h
 
-	ts := NewTitleScreen()
+	ts := StartScreenNew()
 
 	ts.AddEntity(ts.Logo)
 
@@ -27,8 +27,8 @@ func StartGame(w int, h int) {
 	sg.Start()
 }
 
-// NewTitleScreen will create a new titlescreen and return it.
-func NewTitleScreen() *LandingScreen {
+// StartScreenNew will create a new titlescreen and return it.
+func StartScreenNew() *LandingScreen {
 	ts = new(LandingScreen)
 	ts.Level = tl.NewBaseLevel(tl.Cell{
 		Bg: tl.ColorBlack,
@@ -45,7 +45,7 @@ func NewTitleScreen() *LandingScreen {
 	return ts
 }
 
-func NewGamescreen() *Gamescreen {
+func GameScreenNew() *Gamescreen {
 	// Creates the gamescreen level and create the entities
 	gs = new(Gamescreen)
 	gs.Level = tl.NewBaseLevel(tl.Cell{
@@ -56,7 +56,7 @@ func NewGamescreen() *Gamescreen {
 	gs.SnakeEntity = NewSnake()
 	gs.ArenaEntity = NewArena(gameWidth, gameHeight)
 	gs.FoodEntity = NewFood()
-	gs.SidepanelObject = NewSidepanel()
+	gs.SidepanelObject = PannelNew()
 
 	// Add entities for the game level.
 	gs.AddEntity(gs.FoodEntity)
@@ -77,8 +77,8 @@ func NewGamescreen() *Gamescreen {
 	return gs
 }
 
-// NewSidepanel will create a new sidepanel given the arena height and width.
-func NewSidepanel() *Panel {
+// PannelNew will create a new sidepanel given the arena height and width.
+func PannelNew() *Panel {
 	sp = new(Panel)
 
 	head := gs.SnakeEntity.Head()

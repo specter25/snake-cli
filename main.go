@@ -13,5 +13,5 @@ func main() {
 	fmt.Scanf("%d", &width)
 	fmt.Println("Enter arena height , recommended height 25")
 	fmt.Scanf("%d", &height)
-	game.StartGame(width, height)
+	game.NewGame(width, height)
 }
