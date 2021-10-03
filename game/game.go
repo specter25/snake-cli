@@ -11,8 +11,17 @@ import (
 func NewGame(w int, h int) {
 	sg = tl.NewGame()
 
-	gameWidth = w
-	gameHeight = h
+	if w >= 70 {
+		gameWidth = w
+	} else {
+		gameWidth = 70
+	}
+
+	if h >= 25 {
+		gameHeight = h
+	} else {
+		gameHeight = 25
+	}
 
 	ts := StartScreenNew()
 
