@@ -7,12 +7,10 @@ var sg *tl.Game
 var sp *Sidepanel
 var gs *Gamescreen
 var ts *Titlescreen
-var gop *Gameoptionsscreen
 
 // Own created types.
 type direction int
 type difficulty int
-type colorobject int
 
 // Game options
 var Difficulty = "Normal"
@@ -22,12 +20,6 @@ const (
 	easy difficulty = iota
 	normal
 	hard
-)
-
-const (
-	snake colorobject = iota
-	food
-	arena
 )
 
 const (
