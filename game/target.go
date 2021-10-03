@@ -7,11 +7,6 @@ import (
 	tl "github.com/JoelOtter/termloop"
 )
 
-// Variable insideborderW and insideborderH are variables consisting of the arenawidth and height and subtract both with 1
-// in order to account for the arena border.
-var insideborderW = 70 - 5
-var insideborderH = 25 - 5
-
 func NewFood() *Target {
 	food := new(Target)
 	food.Entity = tl.NewEntity(1, 1, 2, 2)
@@ -23,8 +18,8 @@ func NewFood() *Target {
 // MoveFood moves the food into a new random position.
 func (food *Target) MoveFood() {
 
-	NewX := RandomInsideArena(insideborderW, 1)
-	NewY := RandomInsideArena(insideborderH, 1)
+	NewX := RandomInsideArena(gameWidth-5, 5)
+	NewY := RandomInsideArena(gameHeight-5, 5)
 
 	// Changes the X and Y coordinates of the food.
 	food.Foodposition.X = NewX
