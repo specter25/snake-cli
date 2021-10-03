@@ -64,6 +64,7 @@ type Panel struct {
 	Direction      *tl.Text
 	HeadX          *tl.Text
 	HeadY          *tl.Text
+	Round          *tl.Text
 }
 
 type Border struct {
@@ -94,3 +95,4 @@ var gs *Gamescreen
 var ts *LandingScreen
 var gameWidth int
 var gameHeight int
+var round int = 0

@@ -12,6 +12,7 @@ var counterArena = 10
 func (snake *Snake) Tick(event tl.Event) {
 	// Checks if the event is a keyevent.
 	if event.Type == tl.EventKey {
+		round++
 		switch event.Key {
 		case tl.KeyArrowRight:
 			if snake.Direction != left {

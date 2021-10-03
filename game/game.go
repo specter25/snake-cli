@@ -78,6 +78,7 @@ func GameScreenNew() *Gamescreen {
 	gs.AddEntity(gs.SidepanelObject.HeadX)
 	gs.AddEntity(gs.SidepanelObject.Direction)
 	gs.AddEntity(gs.SidepanelObject.HeadY)
+	gs.AddEntity(gs.SidepanelObject.Round)
 	gs.AddEntity(gs.SnakeEntity)
 	gs.AddEntity(gs.ArenaEntity)
 
@@ -102,6 +103,7 @@ func PannelNew() *Panel {
 	sp.Direction = tl.NewText(gameWidth+2, 9, fmt.Sprintf("Snake Direction: %s", GetDirection(gs.SnakeEntity.Direction)), tl.ColorBlack, tl.ColorWhite)
 	sp.HeadX = tl.NewText(gameWidth+2, 10, fmt.Sprintf("X Coordiate(Snake's Head): %d", head.X), tl.ColorBlack, tl.ColorWhite)
 	sp.HeadY = tl.NewText(gameWidth+2, 11, fmt.Sprintf("y Coordiate(Snake's Head) %d", head.Y), tl.ColorBlack, tl.ColorWhite)
+	sp.Round = tl.NewText(gameWidth+2, 12, fmt.Sprintf("Snake Round: %d", round), tl.ColorBlack, tl.ColorWhite)
 
 	return sp
 }
@@ -147,6 +149,7 @@ func UpdateText() {
 	sp.Direction.SetText(fmt.Sprintf("Snake Direction: %s", GetDirection(gs.SnakeEntity.Direction)))
 	sp.HeadX.SetText(fmt.Sprintf("X Coordiate(Snake's Head): %d", gs.SnakeEntity.Head().X))
 	sp.HeadY.SetText(fmt.Sprintf("Y Coordiate(Snake's Head): %d", gs.SnakeEntity.Head().Y))
+	sp.Round.SetText(fmt.Sprintf("Snake Round: %d", round))
 }
 
 // UpdateFPS updates the fps text.
