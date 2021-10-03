@@ -7,7 +7,7 @@ It took me approx 5 hours to build the game . I have used two external libraries
 
 ## Assumptions
 
-- The minimum dimensions for the game to run is 70 pxels width and 25 pixels height .
+- The minimum dimensions for the game to run is 70 pixels width and 25 pixels height .
 
 <!-- ![scrrenshot](http://i.imgur.com/pHf4fjt.gif) -->
 
