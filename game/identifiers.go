@@ -65,6 +65,7 @@ type Panel struct {
 	HeadX          *tl.Text
 	HeadY          *tl.Text
 	Round          *tl.Text
+	Bodylength     *tl.Text
 }
 
 type Border struct {

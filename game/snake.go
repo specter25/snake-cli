@@ -22,6 +22,13 @@ func (snake *Snake) Head() *Coordinates {
 	return &snake.Bodylength[len(snake.Bodylength)-1]
 }
 
+func (snake *Snake) GetBodyLength() int {
+	head := snake.Head()
+	tail := snake.Bodylength[0]
+	length := (head.X - tail.X) + (head.Y - tail.Y)
+	return length
+}
+
 // CollideBorder checks if the arena border contains the snakes head, if so it will return true.
 func (snake *Snake) CollideBorder() bool {
 	return gs.ArenaEntity.Contains(*snake.Head())

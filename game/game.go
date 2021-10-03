@@ -79,6 +79,7 @@ func GameScreenNew() *Gamescreen {
 	gs.AddEntity(gs.SidepanelObject.Direction)
 	gs.AddEntity(gs.SidepanelObject.HeadY)
 	gs.AddEntity(gs.SidepanelObject.Round)
+	gs.AddEntity(gs.SidepanelObject.Bodylength)
 	gs.AddEntity(gs.SnakeEntity)
 	gs.AddEntity(gs.ArenaEntity)
 
@@ -104,6 +105,7 @@ func PannelNew() *Panel {
 	sp.HeadX = tl.NewText(gameWidth+2, 10, fmt.Sprintf("X Coordiate(Snake's Head): %d", head.X), tl.ColorBlack, tl.ColorWhite)
 	sp.HeadY = tl.NewText(gameWidth+2, 11, fmt.Sprintf("y Coordiate(Snake's Head) %d", head.Y), tl.ColorBlack, tl.ColorWhite)
 	sp.Round = tl.NewText(gameWidth+2, 12, fmt.Sprintf("Snake Round: %d", round), tl.ColorBlack, tl.ColorWhite)
+	sp.Bodylength = tl.NewText(gameWidth+2, 13, fmt.Sprintf("Body Length: %d", gs.Score+3), tl.ColorBlack, tl.ColorWhite)
 
 	return sp
 }
@@ -143,6 +145,7 @@ func Gameover() {
 func UpdateScore(amount int) {
 	gs.Score += amount
 	sp.ScoreText.SetText(fmt.Sprintf("Score: %d", gs.Score))
+	sp.Bodylength.SetText(fmt.Sprintf("Body Length: %d", gs.Score+3))
 }
 
 func UpdateText() {
