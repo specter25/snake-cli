@@ -54,7 +54,7 @@ func GameScreenNew() *Gamescreen {
 	SetDiffiultyFPS()
 	gs.Score = 0
 	gs.SnakeEntity = NewSnake()
-	gs.ArenaEntity = NewArena(gameWidth, gameHeight)
+	gs.ArenaEntity = NewBorder(gameWidth, gameHeight)
 	gs.FoodEntity = NewFood()
 	gs.SidepanelObject = PannelNew()
 

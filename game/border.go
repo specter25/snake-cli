@@ -2,34 +2,34 @@ package game
 
 import tl "github.com/JoelOtter/termloop"
 
-// NewArena will create a new arena with the arena with and arena height given when this function was called in game.go
-// This function will create a arena using the arena struct that can be found in the types.go file.
-func NewArena(w, h int) *Border {
-	arena := new(Border)
-	arena.Width = w - 1
-	arena.Height = h - 1
-	arena.Entity = tl.NewEntity(1, 1, 1, 1)
-	arena.ArenaBorder = make(map[Coordinates]int)
+// NewBorder will create a new border with the border with and border height given when this function was called in game.go
+// This function will create a border using the border struct that can be found in the types.go file.
+func NewBorder(w, h int) *Border {
+	border := new(Border)
+	border.Width = w - 1
+	border.Height = h - 1
+	border.Entity = tl.NewEntity(1, 1, 1, 1)
+	border.ArenaBorder = make(map[Coordinates]int)
 
-	for x := 0; x < arena.Width; x++ {
-		arena.ArenaBorder[Coordinates{x, 0}] = 1
-		arena.ArenaBorder[Coordinates{x, arena.Height}] = 1
+	for x := 0; x < border.Width; x++ {
+		border.ArenaBorder[Coordinates{x, 0}] = 1
+		border.ArenaBorder[Coordinates{x, border.Height}] = 1
 	}
 
-	for y := 0; y < arena.Height+1; y++ {
-		arena.ArenaBorder[Coordinates{0, y}] = 1
-		arena.ArenaBorder[Coordinates{arena.Width, y}] = 1
+	for y := 0; y < border.Height+1; y++ {
+		border.ArenaBorder[Coordinates{0, y}] = 1
+		border.ArenaBorder[Coordinates{border.Width, y}] = 1
 	}
-	return arena
+	return border
 }
 
-func (arena *Border) Contains(c Coordinates) bool {
-	_, exists := arena.ArenaBorder[c]
+func (border *Border) Contains(c Coordinates) bool {
+	_, exists := border.ArenaBorder[c]
 	return exists
 }
 
-func (arena *Border) Draw(screen *tl.Screen) {
-	for i := range arena.ArenaBorder {
+func (border *Border) Draw(screen *tl.Screen) {
+	for i := range border.ArenaBorder {
 		screen.RenderCell(i.X, i.Y, &tl.Cell{
 			Bg: CheckSelectedColor(counterArena),
 		})
