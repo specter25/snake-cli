@@ -10,9 +10,9 @@ func NewSnake() *Snake {
 	snake.Entity = tl.NewEntity(5, 5, 1, 1)
 	snake.Direction = right
 	snake.Bodylength = []Coordinates{
-		{1, 6}, // Tail (The tail of the snake will stay the same unless the snake is not colliding with food)
-		{2, 6}, // Body (The body will grow taller when a new head is created, the last piece of the body will become the tail if there is no collision with food)
-		{3, 6}, // Head (Will become a piece of the body when a new head is created)
+		{X: 1, Y: 6}, // Tail (The tail of the snake will stay the same unless the snake is not colliding with food)
+		{X: 2, Y: 6}, // Body (The body will grow taller when a new head is created, the last piece of the body will become the tail if there is no collision with food)
+		{X: 3, Y: 6}, // Head (Will become a piece of the body when a new head is created)
 	}
 
 	return snake
