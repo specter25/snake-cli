@@ -12,7 +12,6 @@ It took me approx 5 hours to build the game . I have used two external libraries
 <!-- ![scrrenshot](http://i.imgur.com/pHf4fjt.gif) -->
 
 ## Play
-
 ### Locally
 
 ```
@@ -25,3 +24,12 @@ $ $GOPATH/bin/snake-cli
 ```
 $ docker run -ti ujjwal25/snake-cli
 ```
+
+## Images
+
+![command](./images/command.png)
+![startscreen](./images/startscreen.png)
+![game](./images/game.png)
+![gameover](./images/gameover.png)
+
+
